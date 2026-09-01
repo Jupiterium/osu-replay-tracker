@@ -2,7 +2,7 @@ name: osu! Replay Tracker
 on:
   schedule:
     - cron: '*/15 * * * *' # Runs every 15 minutes
-  workflow_dispatch: # Allows you to run it manually from the Actions tab
+  workflow_dispatch: # Allows manual trigger
 
 jobs:
   track:
@@ -19,6 +19,9 @@ jobs:
         run: pip install requests
 
       - name: Run Tracker
+        env:
+          OSU_CLIENT_ID: ${{ secrets.OSU_CLIENT_ID }}
+          OSU_CLIENT_SECRET: ${{ secrets.OSU_CLIENT_SECRET }}
         run: python tracker.py
 
       - name: Save State
@@ -28,9 +31,3 @@ jobs:
           git add state.json
           git commit -m "Update state.json" || echo "No changes to commit"
           git push
-
-      - name: Run Tracker
-        env:
-          OSU_CLIENT_ID: ${{ secrets.OSU_CLIENT_ID }}
-          OSU_CLIENT_SECRET: ${{ secrets.OSU_CLIENT_SECRET }}
-        run: python tracker.py
