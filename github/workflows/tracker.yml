@@ -1,0 +1,30 @@
+name: osu! Replay Tracker
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Runs every 15 minutes
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Tracker
+        run: python tracker.py
+
+      - name: Save State
+        run: |
+          git config user.name "Automated Tracker"
+          git config user.email "actions@github.com"
+          git add state.json
+          git commit -m "Update state.json" || echo "No changes to commit"
+          git push
