@@ -28,3 +28,9 @@ jobs:
           git add state.json
           git commit -m "Update state.json" || echo "No changes to commit"
           git push
+
+      - name: Run Tracker
+        env:
+          OSU_CLIENT_ID: ${{ secrets.OSU_CLIENT_ID }}
+          OSU_CLIENT_SECRET: ${{ secrets.OSU_CLIENT_SECRET }}
+        run: python tracker.py
