@@ -4,7 +4,7 @@ import sys
 import os
 
 OSU_USER_ID = "13764890"
-NTFY_TOPIC = "osu_jupiterium_replay_tracker" # Replace with your ntfy topic
+NTFY_TOPIC = "osu_jupiterium_replay_count"
 STATE_FILE = "state.json"
 
 CLIENT_ID = os.environ.get("OSU_CLIENT_ID")
